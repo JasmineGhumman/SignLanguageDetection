@@ -1,0 +1,124 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed May  8 15:44:55 2019
+
+@author: jasmine
+"""
+
+# Install the PyDrive wrapper & import libraries.
+# This only needs to be done once per notebook.
+!pip install -U -q PyDrive
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+
+# Authenticate and create the PyDrive client.
+# This only needs to be done once per notebook.
+auth.authenticate_user()
+gauth = GoogleAuth()
+gauth.credentials = GoogleCredentials.get_application_default()
+drive = GoogleDrive(gauth)
+# Install the PyDrive wrapper & import libraries.
+# This only needs to be done once per notebook.
+!pip install -U -q PyDrive
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+
+# Authenticate and create the PyDrive client.
+# This only needs to be done once per notebook.
+auth.authenticate_user()
+gauth = GoogleAuth()
+gauth.credentials = GoogleCredentials.get_application_default()
+drive = GoogleDrive(gauth)
+!unzip mydata
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+# Input data files are available in the "../input/" directory.
+# For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
+
+import os
+#!pip uninstall keras
+#!pip install keras==2.0.9
+from keras.models import Sequential
+from keras.layers import Convolution2D
+from keras.layers import MaxPooling2D
+from keras.layers import Flatten
+from keras.layers import Dense, Dropout
+from keras import optimizers
+from keras.models import Model
+from keras.layers import (Activation, Dropout, Flatten, Dense, GlobalMaxPooling2D,GlobalAveragePooling2D,
+                          BatchNormalization, Input, Conv2D, Concatenate)
+'''from keras.applications import InceptionResNetV2
+conv_base= InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(75,75,3))'''
+
+import keras
+import numpy as np
+from keras.applications.resnet50 import ResNet50
+
+#!pip uninstall keras
+#!pip install keras==2.0.9
+from keras.models import Sequential
+from keras.layers import Convolution2D
+from keras.layers import MaxPooling2D
+from keras.layers import Flatten
+from keras.layers import Dense, Dropout
+from keras import optimizers
+from keras.models import Model
+from keras.layers import (Activation, Dropout, Flatten, Dense, GlobalMaxPooling2D,GlobalAveragePooling2D,
+                          BatchNormalization, Input, Conv2D, Concatenate)
+'''from keras.applications import InceptionResNetV2
+conv_base= InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(75,75,3))'''
+
+import keras
+import numpy as np
+from keras.applications.resnet50 import ResNet50
+
+for layer in model.layers:
+    layer.trainable = False
+
+for i in range(-6,0):
+    model.layers[i].trainable = True
+
+model.compile(
+    loss='categorical_crossentropy',
+    optimizer=optimizers.SGD(lr = 0.01),metrics=['accuracy'])
+#Part 2 Fittting the CNN to the image
+from keras.preprocessing.image import ImageDataGenerator
+train_datagen = ImageDataGenerator(
+        rescale=1./255,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True)
+
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+training_set = train_datagen.flow_from_directory(
+        'mydata/train',
+        target_size=(224, 224),
+        batch_size=32,
+        class_mode='categorical')
+
+test_set = test_datagen.flow_from_directory(
+        'mydata/test',
+        target_size=(224, 224),
+        batch_size=32,
+        class_mode='categorical')
+
+moDel = model.fit_generator(
+        training_set,
+        steps_per_epoch=800,
+        epochs=8,
+        validation_data = test_set,
+        validation_steps = 200
+      )
+
+#Saving the model
+import h5py
+model.save('Trained_model.h5')
+modelcheckpoint = keras.callbacks.ModelCheckpoint("keras.model",verbose=1)
+
+#model.summary()
